@@ -1,10 +1,19 @@
 module RCat
   class Display
+    NUMBER_WIDTH = 6
+    FILL_CHAR = ' '
     attr_reader :stdout
-    def initialize(stdout=STDOUT)
+    def initialize(stdout = STDOUT,
+                   fill_char = FILL_CHAR,
+                   number_width = NUMBER_WIDTH)
+
+
+      @number_width = number_width
+      @fill_char = fill_char
+      @stdout = stdout
+
       @line_number = 1
       @numbering = :none
-      @stdout = stdout
     end
 
     def enable_numbering
@@ -42,7 +51,7 @@ module RCat
           print_labeled_line(current_line)
         end
       when :all
-          print_labeled_line(current_line)
+        print_labeled_line(current_line)
       else fail "Unexpected case: #{numbering}"
       end
 
@@ -52,7 +61,7 @@ module RCat
     end
 
     def print_labeled_line(line)
-      stdout.print "#{@line_number.to_s.rjust(6)}\t#{line}"
+      stdout.print "#{@line_number.to_s.rjust(@number_width, @fill_char)}\t#{line}"
       increment_line_number
     end
 
