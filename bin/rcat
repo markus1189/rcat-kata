@@ -12,7 +12,7 @@ def parse_options(argv)
 
     parser.on("-b", "Print line numbers for all except blank lines") {
       opts[:number_lines] = true
-      opts[:ignore_blank_lines] = true
+      opts[:significant_lines] = true
     }
 
     parser.on("-s", "Ignore multiple blank lines") {
@@ -28,9 +28,9 @@ end
 begin
   opts, files = parse_options(ARGV)
   display = RCat::Display.new(opts)
-  display.enable_numbering    if opts[:number_lines]
-  display.enable_squeeze      if opts[:squeeze_multi_blank]
-  display.enable_ignore_blank if opts[:ignore_blank_lines]
+  display.enable_numbering             if  opts[:number_lines]
+  display.enable_significant_numbering if  opts[:significant_lines]
+  display.enable_squeeze               if  opts[:squeeze_multi_blank]
 
   if files.empty?
     display.render(STDIN)
