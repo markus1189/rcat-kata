@@ -5,9 +5,19 @@ require_relative "../lib/rcat"
 def parse_options(argv)
   opts = {}
   files = OptionParser.new do |parser|
-    parser.on("-n") { opts[:number_lines]        = true }
-    parser.on("-b") { opts[:ignore_blank_lines]  = true }
-    parser.on("-s") { opts[:squeeze_multi_blank] = true }
+
+    parser.on("-n", "Print line numbers for every line") {
+      opts[:number_lines] = true
+    }
+
+    parser.on("-b", "Print line numbers for all except blank lines") {
+      opts[:number_lines] = true
+      opts[:ignore_blank_lines] = true
+    }
+
+    parser.on("-s", "Ignore multiple blank lines") {
+      opts[:squeeze_multi_blank] = true
+    }
   end.parse(argv)
 
   [opts, files]

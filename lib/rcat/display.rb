@@ -30,7 +30,7 @@ module RCat
       current_line_is_blank = current_line.chomp.empty?
 
       line_numbering_style = :all_lines if numbering && !ignore_blank_lines
-      line_numbering_style = :significant_lines if (numbering && ignore_blank_lines) || ignore_blank_lines
+      line_numbering_style = :significant_lines if (numbering && ignore_blank_lines)
 
       case line_numbering_style
       when :all_lines
