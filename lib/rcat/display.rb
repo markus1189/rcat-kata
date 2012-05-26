@@ -1,8 +1,10 @@
 module RCat
   class Display
-    def initialize
+    attr_reader :stdout
+    def initialize(stdout=STDOUT)
       @line_number = 1
       @numbering = :none
+      @stdout = stdout
     end
 
     def enable_numbering
@@ -50,12 +52,12 @@ module RCat
     end
 
     def print_labeled_line(line)
-      print "#{@line_number.to_s.rjust(6)}\t#{line}"
+      stdout.print "#{@line_number.to_s.rjust(6)}\t#{line}"
       increment_line_number
     end
 
     def print_unlabeled_line(line)
-      print line
+      stdout.print line
     end
 
     def increment_line_number
