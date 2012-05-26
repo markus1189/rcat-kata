@@ -4,21 +4,30 @@ include RCat
 
 describe Display do
   let(:captured) { StringIO.new }
-  let(:display) { Display.new(captured, '.') }
+  let(:display) { Display.new(captured) }
 
-  let(:db) { %Q{
-      What is Life's greates illusion?
-      Innocence my brother.
-    } }
+  let(:db) {  }
 
   it "renders normal input" do
-    display.render(db)
-    captured.string.should eq(db)
+    input = "What is Life's greates illusion?\nInnocence my brother."
+    expected = `echo "#{input}" | cat`
+
+    display.render(input)
+    captured.string.should eq(expected)
+  end
+
+  it "can number lines" do
+    input = "One\nTwo\nThree"
+    expected = `echo "#{input}" | cat -n`
+
+    display.enable_numbering
+    display.render(input)
+    captured.string.should eq(expected)
   end
 
   it "puts no numbers on blank lines if significant numbering active" do
-    input    = "One\n\nTwo\n\nThree\n"
-    expected = ".....1\tOne\n\n.....2\tTwo\n\n.....3\tThree\n"
+    input    = "One\n\nTwo\n\nThree"
+    expected = `echo "#{input}" | cat -b`
 
     display.enable_significant_numbering
     display.render(input)

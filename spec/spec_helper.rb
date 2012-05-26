@@ -22,7 +22,7 @@ def output_should_equal_on *args
     Open3.capture3("cat  #{arg_str}")
 
   rcat_out, rcat_err, rcat_process =
-    Open3.capture3("#{executable_dir}/rcat #{arg_str}")
+    Open3.capture3("ruby #{executable_dir}/rcat #{arg_str}")
 
   if block_given?
     yield(

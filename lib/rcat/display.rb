@@ -61,12 +61,12 @@ module RCat
     end
 
     def print_labeled_line(line)
-      stdout.print "#{@line_number.to_s.rjust(@number_width, @fill_char)}\t#{line}"
+      stdout.puts "#{@line_number.to_s.rjust(@number_width, @fill_char)}\t#{line}"
       increment_line_number
     end
 
     def print_unlabeled_line(line)
-      stdout.print line
+      stdout.puts line
     end
 
     def increment_line_number
