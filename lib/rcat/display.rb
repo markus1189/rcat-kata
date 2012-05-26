@@ -6,7 +6,7 @@ module RCat
     end
 
     def render(data)
-      @line_number = 1
+      @line_number ||= 1
 
       lines = data.lines
       loop { render_line(lines) }

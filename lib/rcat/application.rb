@@ -12,7 +12,7 @@ module RCat
       else
         @files.each do |filename|
           File.open(filename) { |f| @display.render(f) }
-        end 
+        end
       end
     end
 
