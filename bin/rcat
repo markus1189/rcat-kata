@@ -3,19 +3,25 @@
 require_relative "../lib/rcat"
 
 def parse_options(argv)
-  params = {}
-  files  = OptionParser.new do |parser|
-    parser.on("-n") { params[:line_numbering_style] ||= :all_lines         }
-    parser.on("-b") { params[:line_numbering_style]   = :significant_lines }
-    parser.on("-s") { params[:squeeze_extra_newlines] = true               }
+  opts = {}
+  files = OptionParser.new do |parser|
+    parser.on("-n") { opts[:number_lines]        = true }
+    parser.on("-b") { opts[:ignore_blank_lines]  = true }
+    parser.on("-s") { opts[:squeeze_multi_blank] = true }
   end.parse(argv)
 
-  [params, files]
+  [opts, files]
+rescue OptionParser::InvalidOption => err
+  abort "rcat: #{err.message}\nusage: rcat [-bns] [file ...]"
 end
 
 begin
-  params, files = parse_options(ARGV)
-  display = RCat::Display.new(params)
+  opts, files = parse_options(ARGV)
+  display = RCat::Display.new(opts)
+  display.enable_numbering    if opts[:number_lines]
+  display.enable_squeeze      if opts[:squeeze_multi_blank]
+  display.enable_ignore_blank if opts[:ignore_blank_lines]
+
   if files.empty?
     display.render(STDIN)
   else
@@ -24,11 +30,6 @@ begin
     end
   end
 rescue Errno::ENOENT => err
-  STDERR.puts "rcat: #{err.message}"
-  exit(1)
-rescue OptionParser::InvalidOption => err
-  STDERR.puts "rcat: #{err.message}"
-  STDERR.puts "usage: rcat [-bns] [file ...]"
-  exit(1)
+  abort "rcat: #{err.message}"
 end
 
