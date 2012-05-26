@@ -90,7 +90,7 @@ describe RCat do
     it "should succeed on a single file" do
       `cat #{gettysburg_file}`
       cat_success = $?
-        `rcat #{gettysburg_file}`
+        `#{executable_dir}/rcat #{gettysburg_file}`
       rcat_success = $?
 
         cat_success.exitstatus.should eq(0)
@@ -100,7 +100,7 @@ describe RCat do
     it "should fail like cat on an invalid file" do
       `cat invalid 2>/dev/null`
       cat_success = $?
-        `rcat invalid 2>/dev/null`
+        `#{executable_dir}/rcat invalid 2>/dev/null`
       rcat_success = $?
 
         cat_success.exitstatus.should_not eq(0)
@@ -111,10 +111,6 @@ describe RCat do
   context "printing error messages" do
     it "rcats error message should equal cat's" do
       output_should_equal_on "some_invalid_file", "2>/dev/null"
-    end
-
-    it "should provide usage instructions on invalid option" do
-
     end
   end
 end

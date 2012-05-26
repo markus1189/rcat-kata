@@ -15,8 +15,11 @@ end
 def output_should_equal_on *args
   arg_str = args.join(' ')
 
-  cat_out , cat_err , cat_process  = Open3.capture3("cat  #{arg_str}")
-  rcat_out, rcat_err, rcat_process = Open3.capture3("rcat #{arg_str}")
+  cat_out , cat_err , cat_process  =
+    Open3.capture3("cat  #{arg_str}")
+
+  rcat_out, rcat_err, rcat_process =
+    Open3.capture3("#{executable_dir}/rcat #{arg_str}")
 
   if block_given?
     yield(
@@ -36,8 +39,16 @@ def spaced_file
   spaced_file = "#{data_dir}/spaced_out.txt"
 end
 
+def root_dir
+  File.expand_path "#{File.dirname(__FILE__)}/.."
+end
+
+def executable_dir
+  "#{root_dir}/bin"
+end
+
 def data_dir
-  data_dir = "#{File.dirname(__FILE__)}/../data"
+  "#{root_dir}/data"
 end
 
 
