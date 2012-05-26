@@ -9,11 +9,6 @@
 # If you want to see detailed commentary on how to solve this problem
 # please subscribe to the Practicing Ruby Journal ( practicingruby.com )
 # An article on this topic will be released on Tuesday 10/18.
-
-require "open3"
-require "ostruct"
-require "rcat"
-
 require "spec_helper"
 
 describe RCat do
@@ -90,7 +85,7 @@ describe RCat do
     it "should succeed on a single file" do
       `cat #{gettysburg_file}`
       cat_success = $?
-        `#{executable_dir}/rcat #{gettysburg_file}`
+        `#{rcat_file} #{gettysburg_file}`
       rcat_success = $?
 
         cat_success.exitstatus.should eq(0)
@@ -100,7 +95,7 @@ describe RCat do
     it "should fail like cat on an invalid file" do
       `cat invalid 2>/dev/null`
       cat_success = $?
-        `#{executable_dir}/rcat invalid 2>/dev/null`
+        `#{rcat_file} invalid 2>/dev/null`
       rcat_success = $?
 
         cat_success.exitstatus.should_not eq(0)

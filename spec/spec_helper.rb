@@ -1,3 +1,6 @@
+require "open3"
+require "rcat"
+
 class PipeWrapper
   attr_reader :stdout, :stderr, :process
 
@@ -29,6 +32,10 @@ def output_should_equal_on *args
   else
     rcat_out.should eq(cat_out)
   end
+end
+
+def rcat_file
+  "#{executable_dir}/rcat"
 end
 
 def gettysburg_file
