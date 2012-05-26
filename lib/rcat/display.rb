@@ -1,6 +1,6 @@
 module RCat
   class Display
-    def initialize(params)
+    def initialize
       @line_number = 1
       @numbering = :none
     end

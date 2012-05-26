@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 require_relative "../lib/rcat"
 
 def parse_options(argv)
@@ -27,7 +26,7 @@ end
 
 begin
   opts, files = parse_options(ARGV)
-  display = RCat::Display.new(opts)
+  display = RCat::Display.new
   display.enable_numbering             if  opts[:number_lines]
   display.enable_significant_numbering if  opts[:significant_lines]
   display.enable_squeeze               if  opts[:squeeze_multi_blank]
