@@ -33,5 +33,14 @@ describe Display do
     display.render(input)
     captured.string.should eq(expected)
   end
+
+  it "numbers trailing empty lines" do
+    input    = "Test\n\n"
+    expected = `echo -n "#{input}" | cat -n`
+
+    display.enable_numbering
+    display.render(input)
+    captured.string.should eq(expected)
+  end
 end
 
