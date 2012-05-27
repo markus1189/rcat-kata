@@ -39,33 +39,32 @@ module RCat
 
     def render_line(lines)
       current_line = lines.next
-      current_line_is_blank = current_line.chomp.empty?
 
       case numbering
       when :none
-        print_unlabeled_line(current_line)
+        print_without_number(current_line)
       when :significant
-        if current_line_is_blank
-          print_unlabeled_line(current_line)
+        if current_line.chomp.empty?
+          print_without_number(current_line)
         else
-          print_labeled_line(current_line)
+          print_numbered(current_line)
         end
       when :all
-        print_labeled_line(current_line)
+        print_numbered(current_line)
       else fail "Unexpected case: #{numbering}"
       end
 
-      if squeeze && current_line_is_blank
+      if squeeze && current_line.chomp.empty?
         lines.next while lines.peek.chomp.empty?
       end
     end
 
-    def print_labeled_line(line)
+    def print_numbered(line)
       stdout.puts "#{@line_number.to_s.rjust(@number_width, @fill_char)}\t#{line}"
       increment_line_number
     end
 
-    def print_unlabeled_line(line)
+    def print_without_number(line)
       stdout.puts line
     end
 
