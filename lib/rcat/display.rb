@@ -2,8 +2,8 @@ module RCat
   class Display
     NUMBER_WIDTH = 6
     FILL_CHAR = ' '
-    attr_reader :stdout
-    def initialize(stdout = STDOUT,
+    attr_reader :stdout, :printer
+    def initialize(stdout=$stdout,
                    fill_char = FILL_CHAR,
                    number_width = NUMBER_WIDTH)
 
@@ -14,6 +14,7 @@ module RCat
 
       @line_number = 1
       @numbering = :none
+      @printer = Printer.new(stdout)
     end
 
     def enable_numbering
@@ -65,7 +66,7 @@ module RCat
     end
 
     def print_without_number(line)
-      stdout.puts line
+      printer.print line
     end
 
     def increment_line_number
