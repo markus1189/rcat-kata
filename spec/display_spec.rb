@@ -69,5 +69,12 @@ describe Display do
     display.render_files file
     captured.string.should eq(expected)
   end
+
+  it "raises an error if a file could not be read" do
+    file = stub(:path => "catch me if you can")
+    expect {
+      Display.new.render_files file
+    }.to raise_error(RCat::FileNotFound)
+  end
 end
 
