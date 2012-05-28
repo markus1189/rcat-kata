@@ -58,5 +58,16 @@ describe Display do
     display.render(input)
     captured.string.should eq(expected)
   end
+
+  it "can display a file from disk" do
+    input = "I am a little temporary file, please cat me!"
+    file = Tempfile.new('test')
+    file.write input
+    expected = `cat #{file.path}`
+
+    display = Display.new
+    display.render_files file
+    captured.string.should eq(expected)
+  end
 end
 

@@ -32,7 +32,7 @@ module RCat
     end
 
     def print line
-      if not number_significant? or not line.chomp.empty?
+      unless number_significant? and line.chomp.empty?
         $stdout.print "#{@line_number.to_s.rjust(6)}\t"
         increment_line_number
       end

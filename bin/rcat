@@ -23,18 +23,11 @@ rescue OptionParser::InvalidOption => err
   abort "rcat: #{err.message}\nusage: rcat [-bns] [file ...]"
 end
 
-begin
-  opts, files = parse_options(ARGV)
-  display = RCat::Display.new opts
+opts, files = parse_options(ARGV)
 
-  if files.empty?
-    display.render(STDIN)
-  else
-    files.each do |filename|
-      File.open(filename) { |f| display.render(f) }
-    end
-  end
-rescue Errno::ENOENT => err
-  abort "rcat: #{err.message}"
+display = RCat::Display.new opts
+if files.empty?
+  display.render $stdin
+else
+  display.render_files files
 end
-

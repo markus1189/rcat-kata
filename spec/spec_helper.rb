@@ -1,5 +1,6 @@
 require "open3"
 require "rcat"
+require "tempfile"
 
 class PipeWrapper
   attr_reader :stdout, :stderr, :process
