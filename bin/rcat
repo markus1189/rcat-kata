@@ -1,30 +1,31 @@
 #!/usr/bin/env ruby
 require_relative "../lib/rcat"
 
-def parse_options(argv, display)
+def parse_options(argv)
+  params = {}
   files = OptionParser.new do |parser|
 
     parser.on("-n", "Print line numbers for every line") {
-      display.enable_numbering
+      params[:number] = true
     }
 
     parser.on("-b", "Print line numbers for all except blank lines") {
-      display.enable_significant_numbering
+      params[:number_significant] = true
     }
 
     parser.on("-s", "Ignore multiple blank lines") {
-      display.enable_squeeze
+      params[:squeeze] = true
     }
   end.parse(argv)
 
-  files
+  [params, files]
 rescue OptionParser::InvalidOption => err
   abort "rcat: #{err.message}\nusage: rcat [-bns] [file ...]"
 end
 
 begin
-  display = RCat::Display.new
-  files = parse_options(ARGV, display)
+  opts, files = parse_options(ARGV)
+  display = RCat::Display.new opts
 
   if files.empty?
     display.render(STDIN)
