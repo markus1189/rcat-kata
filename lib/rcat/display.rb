@@ -25,7 +25,7 @@ module RCat
       File.read(file)
     rescue Errno::ENOENT => err
       raise FileNotFound,
-        "rcat: not able to read file: #{file.path}\n#{err.message}"
+        "rcat: not able to read file: '#{file}'"
     end
   end
 end
