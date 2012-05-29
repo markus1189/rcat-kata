@@ -1,6 +1,9 @@
 require "open3"
-require "rcat"
 require "tempfile"
+require "simplecov"
+
+SimpleCov.start
+require "rcat"
 
 class PipeWrapper
   attr_reader :stdout, :stderr, :process
@@ -58,5 +61,3 @@ end
 def data_dir
   "#{root_dir}/data"
 end
-
-
